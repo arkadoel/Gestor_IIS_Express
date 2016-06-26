@@ -1,7 +1,29 @@
 ﻿<Window x:Class="GestorIISExpress.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Gestor de IIS Express" Height="450" Width="800" Loaded="Window_Loaded" Background="Gainsboro">
+        Title="Gestor de IIS Express" Height="450" Width="800" Loaded="Window_Loaded" Background="Gainsboro" Icon="pack://siteoforigin:,,,/Resources/web_icon.ico">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+        <Style x:Name="SitiosStyle" TargetType="{x:Type TreeViewItem}">
+            <Setter Property="HeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Name="img"
+						   Width="20"
+						   Height="20"
+						   Stretch="Fill"
+						   Source="pack://siteoforigin:,,,/Resources/Web-Browser-png.png"/>
+                            <TextBlock Text="{Binding}" Margin="5,0" />
+                        </StackPanel>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto" MinWidth="150"/>
@@ -16,8 +38,9 @@
                 <DropShadowEffect Color="Black" BlurRadius="10" Direction="0" RenderingBias="Performance" ShadowDepth="2" />
             </GridSplitter.Effect>
         </GridSplitter>
-        <TreeView x:Name="tvSitios" Grid.Column="0">
-            <TreeViewItem Header="Sitios" IsExpanded="True" x:Name="NodoSitios">
+        <TreeView x:Name="tvSitios" Grid.Column="0" Margin="0,0,0,29">
+            <TreeViewItem Header="Sitios" IsExpanded="True" x:Name="NodoSitios" Style="{x:Null}">
+
             </TreeViewItem>
         </TreeView>
         <Label Content="Nombre" Grid.Column="1" HorizontalAlignment="Left" Margin="19,10,0,0" VerticalAlignment="Top" Foreground="Black"/>
@@ -34,8 +57,36 @@
         </TextBlock>
         <DataGrid Name="dtApps" Grid.Column="1" AutoGenerateColumns="True" Margin="22,117,10,0" VerticalAlignment="Top" Height="244"/>
         <TextBox Name="txtPuerto" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="92,50,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Image Name="imgEjecutar" MouseLeftButtonDown="imgEjecutar_MouseLeftButtonDown" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="229,50,0,0" VerticalAlignment="Top" Width="31" Source="Resources/Web-Browser-png.png"/>
         <Label Content="Puerto" Grid.Column="1" HorizontalAlignment="Left" Margin="22,50,0,0" VerticalAlignment="Top" Height="23" Foreground="Black"/>
         <Label Content="Aplicaciones" VerticalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="22,86,0,0" VerticalAlignment="Top" Height="26" Foreground="Black"/>
+        <Button Name="btnGuardar" Click="btnGuardar_Click" Content="GUARDAR" VerticalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Height="30"/>
+        <Button Name="btnNuevaApp" Click="btnNuevaApp_Click" Content="NUEVA APLICACION" Grid.Column="1" HorizontalAlignment="Left" Margin="22,0,0,10" VerticalAlignment="Bottom" Width="153" Height="30" RenderTransformOrigin="3.427,-0.222"/>
+        <Grid Visibility="Hidden" x:Name="pnlConfig" Grid.Column="1" HorizontalAlignment="Left" Height="150" Margin="100,-5,0,0" VerticalAlignment="Top" Width="400">
+            <Grid.Effect>
+                <DropShadowEffect  BlurRadius="20" Direction="-90" ShadowDepth="10" RenderingBias="Performance" Color="Black" />
+            </Grid.Effect>
+            <Rectangle RadiusX="5" RadiusY="5" >
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                        <GradientStop Color="White" Offset="1"/>
+                        <GradientStop Color="#FF585858"/>
+                        <GradientStop Color="#FFB8B8B8" Offset="0.044"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <Button Name="btnConfigOK" Click="btnConfigOK_Click" Content="ACEPTAR" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75"/>
+            <Button Name="btnConfigCancel" Click="btnConfigCancel_Click" Content="CANCELAR" HorizontalAlignment="Right" Margin="0,0,90,10" VerticalAlignment="Bottom" Width="75"/>
+            <TextBox Name="txtNewAppDir" HorizontalAlignment="Left" Height="23" Margin="10,0,0,46" TextWrapping="Wrap" Text="" VerticalAlignment="Bottom" Width="300"/>
+            <Button x:Name="btnBuscarDestino" Click="btnBuscarDestino_Click" Content="BUSCAR" HorizontalAlignment="Right" Margin="0,0,10,46" VerticalAlignment="Bottom" Width="75" Height="23"/>
+            <TextBox x:Name="txtNewAppPath" HorizontalAlignment="Left" Height="23" Margin="68,0,0,105" TextWrapping="Wrap" Text="" VerticalAlignment="Bottom" Width="192"/>
+            <Label Content="Path:" HorizontalAlignment="Left" Margin="10,0,0,105" VerticalAlignment="Bottom"/>
+            <Label Content="Physical Path:" HorizontalAlignment="Left" Margin="10,0,0,74" VerticalAlignment="Bottom"/>
+        </Grid>
+        <Button Name="btnAddSite" Click="btnAddSite_Click" Content="+" FontFamily="Arial black" FontSize="20" VerticalContentAlignment="Top" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="50" Height="29"/>
+        <Button Name="btnDelSite" Click="btnDelSite_Click" Content="--" FontFamily="Arial black" FontSize="20" VerticalContentAlignment="Top" HorizontalAlignment="Right" Margin="0,0,0,1" VerticalAlignment="Bottom" Width="50" Height="29"/>
+
+
 
     </Grid>
 </Window>
